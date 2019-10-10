@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="PfmService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Buck" EntityType="PfmService.Buck"/>
+        <EntitySet Name="Buckets" EntityType="PfmService.Buckets"/>
+        <EntitySet Name="Currencies" EntityType="PfmService.Currencies"/>
+        <EntitySet Name="Currencies_texts" EntityType="PfmService.Currencies_texts"/>
+        <EntitySet Name="PH" EntityType="PfmService.PH"/>
+        <EntitySet Name="Portfolio" EntityType="PfmService.Portfolio"/>
+        <EntitySet Name="PortfolioHierarchy" EntityType="PfmService.PortfolioHierarchy"/>
+        <EntitySet Name="Portfolios" EntityType="PfmService.Portfolios"/>
+        <EntitySet Name="Project" EntityType="PfmService.Project"/>
+        <AssociationSet Name="Buck_currency" Association="PfmService.Buck_currency">
+          <End Role="Buck" EntitySet="Buck"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+        <AssociationSet Name="Buck_projects" Association="PfmService.Buck_projects">
+          <End Role="Buck" EntitySet="Buck"/>
+          <End Role="Project" EntitySet="Project"/>
+        </AssociationSet>
+        <AssociationSet Name="Buckets_currency" Association="PfmService.Buckets_currency">
+          <End Role="Buckets" EntitySet="Buckets"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+        <AssociationSet Name="Buckets_projects" Association="PfmService.Buckets_projects">
+          <End Role="Buckets" EntitySet="Buckets"/>
+          <End Role="Project" EntitySet="Project"/>
+        </AssociationSet>
+        <AssociationSet Name="Currencies_texts_1" Association="PfmService.Currencies_texts_1">
+          <End Role="Currencies" EntitySet="Currencies"/>
+          <End Role="Currencies_texts" EntitySet="Currencies_texts"/>
+        </AssociationSet>
+        <AssociationSet Name="Currencies_localized" Association="PfmService.Currencies_localized">
+          <End Role="Currencies" EntitySet="Currencies"/>
+          <End Role="Currencies_texts" EntitySet="Currencies_texts"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolio_currency" Association="PfmService.Portfolio_currency">
+          <End Role="Portfolio" EntitySet="Portfolio"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolio_projects" Association="PfmService.Portfolio_projects">
+          <End Role="Portfolio" EntitySet="Portfolio"/>
+          <End Role="Project" EntitySet="Project"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolios_currency" Association="PfmService.Portfolios_currency">
+          <End Role="Portfolios" EntitySet="Portfolios"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolios_projects" Association="PfmService.Portfolios_projects">
+          <End Role="Portfolios" EntitySet="Portfolios"/>
+          <End Role="Project" EntitySet="Project"/>
+        </AssociationSet>
+        <AssociationSet Name="Project_currency" Association="PfmService.Project_currency">
+          <End Role="Project" EntitySet="Project"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+      </EntityContainer>
+      <EntityType Name="Buck">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="startDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="endDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="PfmService.Buck_currency" FromRole="Buck" ToRole="Currencies"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32"/>
+        <Property Name="hierarchyOrder" Type="Edm.Int32"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <NavigationProperty Name="projects" Relationship="PfmService.Buck_projects" FromRole="Buck" ToRole="Project"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="parent_ID" Type="Edm.Guid"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="Buckets">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="startDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="endDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="PfmService.Buckets_currency" FromRole="Buckets" ToRole="Currencies"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32"/>
+        <Property Name="hierarchyOrder" Type="Edm.Int32"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <NavigationProperty Name="projects" Relationship="PfmService.Buckets_projects" FromRole="Buckets" ToRole="Project"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="parent_ID" Type="Edm.Guid"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="Currencies">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+        <Property Name="symbol" Type="Edm.String" MaxLength="2"/>
+        <NavigationProperty Name="texts" Relationship="PfmService.Currencies_texts_1" FromRole="Currencies" ToRole="Currencies_texts"/>
+        <NavigationProperty Name="localized" Relationship="PfmService.Currencies_localized" FromRole="Currencies" ToRole="Currencies_texts"/>
+      </EntityType>
+      <EntityType Name="Currencies_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="5" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="PH">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="parentID" Type="Edm.Guid" sap:text="name"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Portfolio">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="startDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="endDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="PfmService.Portfolio_currency" FromRole="Portfolio" ToRole="Currencies"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32"/>
+        <Property Name="hierarchyOrder" Type="Edm.Int32"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <NavigationProperty Name="projects" Relationship="PfmService.Portfolio_projects" FromRole="Portfolio" ToRole="Project"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="parent_ID" Type="Edm.Guid"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="PortfolioHierarchy">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:hierarchy-node-for="ID" sap:text="name"/>
+        <Property Name="parentID" Type="Edm.Guid" sap:hierarchy-parent-node-for="ID" sap:text="name"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="currency" Type="Edm.String" MaxLength="3"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32" sap:hierarchy-level-for="ID"/>
+        <Property Name="drillState" Type="Edm.String" MaxLength="10" sap:hierarchy-drill-state-for="ID"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="Portfolios">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="startDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="endDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="PfmService.Portfolios_currency" FromRole="Portfolios" ToRole="Currencies"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32"/>
+        <Property Name="hierarchyOrder" Type="Edm.Int32"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <NavigationProperty Name="projects" Relationship="PfmService.Portfolios_projects" FromRole="Portfolios" ToRole="Project"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="parent_ID" Type="Edm.Guid"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="Project">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="priority" Type="Edm.String"/>
+        <Property Name="stage" Type="Edm.String"/>
+        <Property Name="projectManager" Type="Edm.String"/>
+        <Property Name="criticaly" Type="Edm.Int32"/>
+        <Property Name="plannedStartDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedEndDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="actualStartDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="actualEndDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="PfmService.Project_currency" FromRole="Project" ToRole="Currencies"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <Property Name="plannedDuration" Type="Edm.Int32"/>
+        <Property Name="actualDuration" Type="Edm.Int32"/>
+        <Property Name="parent_ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+      </EntityType>
+      <Association Name="Buck_currency">
+        <End Role="Buck" Type="PfmService.Buck" Multiplicity="*"/>
+        <End Role="Currencies" Type="PfmService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Buck">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Buck_projects">
+        <End Role="Buck" Type="PfmService.Buck" Multiplicity="*"/>
+        <End Role="Project" Type="PfmService.Project" Multiplicity="*"/>
+      </Association>
+      <Association Name="Buckets_currency">
+        <End Role="Buckets" Type="PfmService.Buckets" Multiplicity="*"/>
+        <End Role="Currencies" Type="PfmService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Buckets">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Buckets_projects">
+        <End Role="Buckets" Type="PfmService.Buckets" Multiplicity="*"/>
+        <End Role="Project" Type="PfmService.Project" Multiplicity="*"/>
+      </Association>
+      <Association Name="Currencies_texts_1">
+        <End Role="Currencies" Type="PfmService.Currencies" Multiplicity="*"/>
+        <End Role="Currencies_texts" Type="PfmService.Currencies_texts" Multiplicity="*">
+          <OnDelete Action="Cascade"/>
+        </End>
+      </Association>
+      <Association Name="Currencies_localized">
+        <End Role="Currencies" Type="PfmService.Currencies" Multiplicity="*"/>
+        <End Role="Currencies_texts" Type="PfmService.Currencies_texts" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies_texts">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolio_currency">
+        <End Role="Portfolio" Type="PfmService.Portfolio" Multiplicity="*"/>
+        <End Role="Currencies" Type="PfmService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Portfolio">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolio_projects">
+        <End Role="Portfolio" Type="PfmService.Portfolio" Multiplicity="*"/>
+        <End Role="Project" Type="PfmService.Project" Multiplicity="*"/>
+      </Association>
+      <Association Name="Portfolios_currency">
+        <End Role="Portfolios" Type="PfmService.Portfolios" Multiplicity="*"/>
+        <End Role="Currencies" Type="PfmService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Portfolios">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolios_projects">
+        <End Role="Portfolios" Type="PfmService.Portfolios" Multiplicity="*"/>
+        <End Role="Project" Type="PfmService.Project" Multiplicity="*"/>
+      </Association>
+      <Association Name="Project_currency">
+        <End Role="Project" Type="PfmService.Project" Multiplicity="*"/>
+        <End Role="Currencies" Type="PfmService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Project">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Annotations Target="PfmService.EntityContainer/Buck" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Buck/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buck/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buck/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buck/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buck/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Buck/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Buckets/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buckets/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buckets/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buckets/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Buckets/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Buckets/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Path>name</Path>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency Code"/>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies/symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency Symbol"/>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies_texts/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies_texts/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="PfmService.Currencies_texts/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency Code"/>
+      </Annotations>
+      <Annotations Target="PfmService.PH" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Portfolio Hierarchy"/>
+      </Annotations>
+      <Annotations Target="PfmService.EntityContainer/PH" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.PH/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolio/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolio/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolio/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolio/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolio/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolio/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.PortfolioHierarchy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Portfolio Hierarchy"/>
+      </Annotations>
+      <Annotations Target="PfmService.EntityContainer/PortfolioHierarchy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.PortfolioHierarchy/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency Code"/>
+      </Annotations>
+      <Annotations Target="PfmService.PortfolioHierarchy/drillState" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.PortfolioHierarchy/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolios/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolios/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolios/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolios/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolios/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Portfolios/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Project" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Project"/>
+      </Annotations>
+      <Annotations Target="PfmService.Project/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Project/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Project/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Project/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Project/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="PfmService.Project/plannedDuration" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Project/actualDuration" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="PfmService.Project/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

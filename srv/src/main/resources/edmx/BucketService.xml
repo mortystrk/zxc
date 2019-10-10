@@ -1,0 +1,1502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="BucketService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Buckets" EntityType="BucketService.Buckets"/>
+        <EntitySet Name="Currencies" EntityType="BucketService.Currencies"/>
+        <EntitySet Name="Currencies_texts" EntityType="BucketService.Currencies_texts"/>
+        <EntitySet Name="Portfolio" EntityType="BucketService.Portfolio"/>
+        <EntitySet Name="Portfolios" EntityType="BucketService.Portfolios"/>
+        <EntitySet Name="Projects" EntityType="BucketService.Projects"/>
+        <AssociationSet Name="Buckets_currency" Association="BucketService.Buckets_currency">
+          <End Role="Buckets" EntitySet="Buckets"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+        <AssociationSet Name="Buckets_parent" Association="BucketService.Buckets_parent">
+          <End Role="Buckets" EntitySet="Buckets"/>
+          <End Role="Buckets1" EntitySet="Buckets"/>
+        </AssociationSet>
+        <AssociationSet Name="Buckets_portfolio" Association="BucketService.Buckets_portfolio">
+          <End Role="Buckets" EntitySet="Buckets"/>
+          <End Role="Buckets1" EntitySet="Buckets"/>
+        </AssociationSet>
+        <AssociationSet Name="Buckets_projects" Association="BucketService.Buckets_projects">
+          <End Role="Buckets" EntitySet="Buckets"/>
+          <End Role="Projects" EntitySet="Projects"/>
+        </AssociationSet>
+        <AssociationSet Name="Currencies_texts_1" Association="BucketService.Currencies_texts_1">
+          <End Role="Currencies" EntitySet="Currencies"/>
+          <End Role="Currencies_texts" EntitySet="Currencies_texts"/>
+        </AssociationSet>
+        <AssociationSet Name="Currencies_localized" Association="BucketService.Currencies_localized">
+          <End Role="Currencies" EntitySet="Currencies"/>
+          <End Role="Currencies_texts" EntitySet="Currencies_texts"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolio_currency" Association="BucketService.Portfolio_currency">
+          <End Role="Portfolio" EntitySet="Portfolio"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolio_parent" Association="BucketService.Portfolio_parent">
+          <End Role="Portfolio" EntitySet="Portfolio"/>
+          <End Role="Portfolio1" EntitySet="Portfolio"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolio_portfolio" Association="BucketService.Portfolio_portfolio">
+          <End Role="Portfolio" EntitySet="Portfolio"/>
+          <End Role="Portfolio1" EntitySet="Portfolio"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolios_currency" Association="BucketService.Portfolios_currency">
+          <End Role="Portfolios" EntitySet="Portfolios"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolios_parent" Association="BucketService.Portfolios_parent">
+          <End Role="Portfolios" EntitySet="Portfolios"/>
+          <End Role="Portfolios1" EntitySet="Portfolios"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolios_portfolio" Association="BucketService.Portfolios_portfolio">
+          <End Role="Portfolios" EntitySet="Portfolios"/>
+          <End Role="Portfolios1" EntitySet="Portfolios"/>
+        </AssociationSet>
+        <AssociationSet Name="Portfolios_projects" Association="BucketService.Portfolios_projects">
+          <End Role="Portfolios" EntitySet="Portfolios"/>
+          <End Role="Projects" EntitySet="Projects"/>
+        </AssociationSet>
+        <AssociationSet Name="Projects_parent" Association="BucketService.Projects_parent">
+          <End Role="Projects" EntitySet="Projects"/>
+          <End Role="Portfolio" EntitySet="Portfolio"/>
+        </AssociationSet>
+        <AssociationSet Name="Projects_portfolio" Association="BucketService.Projects_portfolio">
+          <End Role="Projects" EntitySet="Projects"/>
+          <End Role="Portfolios" EntitySet="Portfolios"/>
+        </AssociationSet>
+        <AssociationSet Name="Projects_currency" Association="BucketService.Projects_currency">
+          <End Role="Projects" EntitySet="Projects"/>
+          <End Role="Currencies" EntitySet="Currencies"/>
+        </AssociationSet>
+      </EntityContainer>
+      <EntityType Name="Buckets">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="startDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="endDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="BucketService.Buckets_currency" FromRole="Buckets" ToRole="Currencies"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32"/>
+        <Property Name="hierarchyOrder" Type="Edm.Int32"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <NavigationProperty Name="parent" Relationship="BucketService.Buckets_parent" FromRole="Buckets" ToRole="Buckets1"/>
+        <NavigationProperty Name="portfolio" Relationship="BucketService.Buckets_portfolio" FromRole="Buckets" ToRole="Buckets1"/>
+        <NavigationProperty Name="children" Relationship="BucketService.Buckets_parent" FromRole="Buckets1" ToRole="Buckets"/>
+        <NavigationProperty Name="projects" Relationship="BucketService.Buckets_projects" FromRole="Buckets" ToRole="Projects"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="parent_ID" Type="Edm.Guid"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="Currencies">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+        <Property Name="symbol" Type="Edm.String" MaxLength="2"/>
+        <NavigationProperty Name="texts" Relationship="BucketService.Currencies_texts_1" FromRole="Currencies" ToRole="Currencies_texts"/>
+        <NavigationProperty Name="localized" Relationship="BucketService.Currencies_localized" FromRole="Currencies" ToRole="Currencies_texts"/>
+      </EntityType>
+      <EntityType Name="Currencies_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="5" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="Portfolio">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="startDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="endDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="BucketService.Portfolio_currency" FromRole="Portfolio" ToRole="Currencies"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32"/>
+        <Property Name="hierarchyOrder" Type="Edm.Int32"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <NavigationProperty Name="parent" Relationship="BucketService.Portfolio_parent" FromRole="Portfolio" ToRole="Portfolio1"/>
+        <NavigationProperty Name="portfolio" Relationship="BucketService.Portfolio_portfolio" FromRole="Portfolio" ToRole="Portfolio1"/>
+        <NavigationProperty Name="children" Relationship="BucketService.Portfolio_parent" FromRole="Portfolio1" ToRole="Portfolio"/>
+        <NavigationProperty Name="projects" Relationship="BucketService.Projects_parent" FromRole="Portfolio" ToRole="Projects"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="parent_ID" Type="Edm.Guid"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="Portfolios">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false" sap:text="name"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="objectType" Type="Edm.String" MaxLength="10" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="startDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="endDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="BucketService.Portfolios_currency" FromRole="Portfolios" ToRole="Currencies"/>
+        <Property Name="hierarchyLevel" Type="Edm.Int32"/>
+        <Property Name="hierarchyOrder" Type="Edm.Int32"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <NavigationProperty Name="parent" Relationship="BucketService.Portfolios_parent" FromRole="Portfolios" ToRole="Portfolios1"/>
+        <NavigationProperty Name="portfolio" Relationship="BucketService.Portfolios_portfolio" FromRole="Portfolios" ToRole="Portfolios1"/>
+        <NavigationProperty Name="children" Relationship="BucketService.Portfolios_parent" FromRole="Portfolios1" ToRole="Portfolios"/>
+        <NavigationProperty Name="projects" Relationship="BucketService.Portfolios_projects" FromRole="Portfolios" ToRole="Projects"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="parent_ID" Type="Edm.Guid"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="Projects">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="parent" Relationship="BucketService.Projects_parent" FromRole="Projects" ToRole="Portfolio"/>
+        <NavigationProperty Name="portfolio" Relationship="BucketService.Projects_portfolio" FromRole="Projects" ToRole="Portfolios"/>
+        <Property Name="type" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String" MaxLength="256" Nullable="false"/>
+        <Property Name="description" Type="Edm.String" MaxLength="2000"/>
+        <Property Name="status" Type="Edm.String" MaxLength="10"/>
+        <Property Name="referenceNumber" Type="Edm.String" MaxLength="256"/>
+        <Property Name="owner" Type="Edm.String" MaxLength="256"/>
+        <Property Name="priority" Type="Edm.String"/>
+        <Property Name="stage" Type="Edm.String"/>
+        <Property Name="projectManager" Type="Edm.String"/>
+        <Property Name="criticaly" Type="Edm.Int32"/>
+        <Property Name="plannedStartDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="plannedEndDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="actualStartDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="actualEndDate" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="budget" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="plannedCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <Property Name="actualCosts" Type="Edm.Decimal" Scale="2" Precision="12"/>
+        <NavigationProperty Name="currency" Relationship="BucketService.Projects_currency" FromRole="Projects" ToRole="Currencies"/>
+        <Property Name="wasRemoved" Type="Edm.Boolean"/>
+        <Property Name="plannedDuration" Type="Edm.Int32"/>
+        <Property Name="actualDuration" Type="Edm.Int32"/>
+        <Property Name="parent_ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="portfolio_ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+      </EntityType>
+      <Association Name="Buckets_currency">
+        <End Role="Buckets" Type="BucketService.Buckets" Multiplicity="*"/>
+        <End Role="Currencies" Type="BucketService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Buckets">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Buckets_parent">
+        <End Role="Buckets" Type="BucketService.Buckets" Multiplicity="*"/>
+        <End Role="Buckets1" Type="BucketService.Buckets" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Buckets1">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Buckets">
+            <PropertyRef Name="parent_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Buckets_portfolio">
+        <End Role="Buckets" Type="BucketService.Buckets" Multiplicity="*"/>
+        <End Role="Buckets1" Type="BucketService.Buckets" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Buckets1">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Buckets">
+            <PropertyRef Name="portfolio_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Buckets_projects">
+        <End Role="Buckets" Type="BucketService.Buckets" Multiplicity="*"/>
+        <End Role="Projects" Type="BucketService.Projects" Multiplicity="*"/>
+      </Association>
+      <Association Name="Currencies_texts_1">
+        <End Role="Currencies" Type="BucketService.Currencies" Multiplicity="*"/>
+        <End Role="Currencies_texts" Type="BucketService.Currencies_texts" Multiplicity="*">
+          <OnDelete Action="Cascade"/>
+        </End>
+      </Association>
+      <Association Name="Currencies_localized">
+        <End Role="Currencies" Type="BucketService.Currencies" Multiplicity="*"/>
+        <End Role="Currencies_texts" Type="BucketService.Currencies_texts" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies_texts">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolio_currency">
+        <End Role="Portfolio" Type="BucketService.Portfolio" Multiplicity="*"/>
+        <End Role="Currencies" Type="BucketService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Portfolio">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolio_parent">
+        <End Role="Portfolio" Type="BucketService.Portfolio" Multiplicity="*"/>
+        <End Role="Portfolio1" Type="BucketService.Portfolio" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Portfolio1">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Portfolio">
+            <PropertyRef Name="parent_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolio_portfolio">
+        <End Role="Portfolio" Type="BucketService.Portfolio" Multiplicity="*"/>
+        <End Role="Portfolio1" Type="BucketService.Portfolio" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Portfolio1">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Portfolio">
+            <PropertyRef Name="portfolio_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolios_currency">
+        <End Role="Portfolios" Type="BucketService.Portfolios" Multiplicity="*"/>
+        <End Role="Currencies" Type="BucketService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Portfolios">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolios_parent">
+        <End Role="Portfolios" Type="BucketService.Portfolios" Multiplicity="*"/>
+        <End Role="Portfolios1" Type="BucketService.Portfolios" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Portfolios1">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Portfolios">
+            <PropertyRef Name="parent_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolios_portfolio">
+        <End Role="Portfolios" Type="BucketService.Portfolios" Multiplicity="*"/>
+        <End Role="Portfolios1" Type="BucketService.Portfolios" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Portfolios1">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Portfolios">
+            <PropertyRef Name="portfolio_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Portfolios_projects">
+        <End Role="Portfolios" Type="BucketService.Portfolios" Multiplicity="*"/>
+        <End Role="Projects" Type="BucketService.Projects" Multiplicity="*"/>
+      </Association>
+      <Association Name="Projects_parent">
+        <End Role="Projects" Type="BucketService.Projects" Multiplicity="*"/>
+        <End Role="Portfolio" Type="BucketService.Portfolio" Multiplicity="1"/>
+        <ReferentialConstraint>
+          <Principal Role="Portfolio">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Projects">
+            <PropertyRef Name="parent_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Projects_portfolio">
+        <End Role="Projects" Type="BucketService.Projects" Multiplicity="*"/>
+        <End Role="Portfolios" Type="BucketService.Portfolios" Multiplicity="1"/>
+        <ReferentialConstraint>
+          <Principal Role="Portfolios">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Projects">
+            <PropertyRef Name="portfolio_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Projects_currency">
+        <End Role="Projects" Type="BucketService.Projects" Multiplicity="*"/>
+        <End Role="Currencies" Type="BucketService.Currencies" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Currencies">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Projects">
+            <PropertyRef Name="currency_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Annotations Target="BucketService.Buckets" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="General Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Info"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Financial Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FinancialInfo"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="FinancialInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="budget"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedCosts"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="actualCosts"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="name"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="referenceNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="description"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="projectManager"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="startDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedEndDate"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="HeaderInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="budget"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedCosts"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="actualCosts"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Info">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdBy"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedBy"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderFacets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#HeaderInfo"/>
+              <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" String="Buckets"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="TypeName" String="Buckets"/>
+            <PropertyValue Property="TypeNamePlural" String="Bucket"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="referenceNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="type"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="startDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="endDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="owner"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="status"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="name"/>
+                  <PropertyValue Property="Descending" Bool="false"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>type</PropertyPath>
+            <PropertyPath>status</PropertyPath>
+            <PropertyPath>startDate</PropertyPath>
+            <PropertyPath>endDate</PropertyPath>
+            <PropertyPath>owner</PropertyPath>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/referenceNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Reference Number"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/description" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/budget" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Budget"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/type" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Type"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/status" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Status"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/startDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Start Date"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/endDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="End Date"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/plannedCosts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Planned Cost"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/actualCosts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Actual Cost"/>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Buckets/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Path>name</Path>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency Code"/>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies/symbol" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency Symbol"/>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies_texts/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies_texts/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="BucketService.Currencies_texts/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency Code"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolio/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolio/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created At"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolio/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolio/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolio/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolio/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="General Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Info"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Financial Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FinancialInfo"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="FinancialInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="budget"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedCosts"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="actualCosts"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="name"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="referenceNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="description"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="projectManager"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="startDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedEndDate"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="HeaderInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="budget"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedCosts"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="actualCosts"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Info">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdBy"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedBy"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderFacets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#HeaderInfo"/>
+              <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" String="Portfolios"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="TypeName" String="Portfolios"/>
+            <PropertyValue Property="TypeNamePlural" String="Portfolio"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="referenceNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="type"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="startDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="endDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="owner"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="status"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="name"/>
+                  <PropertyValue Property="Descending" Bool="false"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>type</PropertyPath>
+            <PropertyPath>startDate</PropertyPath>
+            <PropertyPath>endDate</PropertyPath>
+            <PropertyPath>owner</PropertyPath>
+            <PropertyPath>status</PropertyPath>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/referenceNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Reference Number"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/description" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Description"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/budget" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Budget"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/type" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Type"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/status" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Status"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/startDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Start Date"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/endDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="End Date"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/plannedCosts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Planned Cost"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/actualCosts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Actual Cost"/>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Portfolios/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Projects" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="UI.DataPoint" Qualifier="TestDataPoint">
+          <Record Type="UI.DataPointType">
+            <PropertyValue Property="Criticality" Path="criticaly"/>
+            <PropertyValue Property="Title" String="Budget"/>
+            <PropertyValue Property="Value" Path="budget"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.CollectionFacet">
+              <PropertyValue Property="Facets">
+                <Collection>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="Label" String="Info1"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Info1"/>
+                  </Record>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="Label" String="Info2"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Info2"/>
+                  </Record>
+                </Collection>
+              </PropertyValue>
+              <PropertyValue Property="ID" String="CollFacetTest"/>
+              <PropertyValue Property="Label" String="General Info2"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="General Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Info"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Label" String="Financial Info"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FinancialInfo"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="FinancialInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="budget"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedCosts"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="actualCosts"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="name"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="referenceNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="description"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="projectManager"/>
+                  <PropertyValue Property="DefaultValue" String="Margarita"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedStartDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedEndDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="portfolio_ID"/>
+                  <PropertyValue Property="Label" String="Portfolio"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="parent_ID"/>
+                  <PropertyValue Property="Label" String="Parent Object"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Header1">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="budget"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Header2">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="plannedCosts"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="actualCosts"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Info">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdBy"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedBy"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Info1">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdBy"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedBy"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Info2">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdBy"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedAt"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="modifiedBy"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderFacets">
+          <Collection>
+            <Record Type="UI.CollectionFacet">
+              <PropertyValue Property="isSummary" Bool="true"/>
+              <PropertyValue Property="Facets">
+                <Collection>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="Label" String="Info1"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Header1"/>
+                  </Record>
+                  <Record Type="UI.ReferenceFacet">
+                    <PropertyValue Property="Label" String="Info2"/>
+                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Header2"/>
+                  </Record>
+                </Collection>
+              </PropertyValue>
+              <PropertyValue Property="ID" String="CollFacetTest"/>
+              <PropertyValue Property="Label" String="Header"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#TestDataPoint"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="name"/>
+              </Record>
+            </PropertyValue>
+            <PropertyValue Property="TypeName" String="Project"/>
+            <PropertyValue Property="TypeNamePlural" String="Projects"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="referenceNumber"/>
+            </Record>
+            <Record Type="UI.DataFieldWithUrl">
+              <PropertyValue Property="Value" Path="name"/>
+              <PropertyValue Property="Url" String="https://www.google.com"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="portfolio/name"/>
+              <PropertyValue Property="Label" String="Portfolio"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="parent/name"/>
+              <PropertyValue Property="Label" String="Parent Object"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="type"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="priority"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="status"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="stage"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="projectManager"/>
+            </Record>
+          </Collection>
+          <Annotation Term="UI.Criticality" Path="criticaly"/>
+        </Annotation>
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="name"/>
+                  <PropertyValue Property="Descending" Bool="false"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>type</PropertyPath>
+            <PropertyPath>priority</PropertyPath>
+            <PropertyPath>status</PropertyPath>
+            <PropertyPath>stage</PropertyPath>
+            <PropertyPath>projectManager</PropertyPath>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created On"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Created By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Changed By"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/parent" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+        <Annotation Term="Common.Label" String="Parent Object"/>
+        <Annotation Term="Common.Text" Path="parent/name">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="CollectionPath" String="Buckets"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="parent_ID"/>
+                  <PropertyValue Property="ValueListProperty" String="ID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SearchSupported" Bool="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/portfolio" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+        <Annotation Term="Common.Label" String="Portfolio"/>
+        <Annotation Term="Common.Text" Path="portfolio/name">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="CollectionPath" String="Portfolios"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="portfolio_ID"/>
+                  <PropertyValue Property="ValueListProperty" String="ID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SearchSupported" Bool="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/type" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Type"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Name"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/description" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Description"/>
+        <Annotation Term="UI.MultiLineText" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/status" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Status"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/referenceNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Reference Number"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/priority" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Priority"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/stage" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Stage"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/projectManager" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Project Manager"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/plannedStartDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Start Date"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/plannedEndDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="End Date"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/budget" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Budget"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/plannedCosts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Planned Cost"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/actualCosts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Actual Cost"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/currency" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/plannedDuration" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/actualDuration" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/parent_ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+        <Annotation Term="Common.Label" String="Parent Object"/>
+        <Annotation Term="Common.Text" Path="parent/name">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="CollectionPath" String="Buckets"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="parent_ID"/>
+                  <PropertyValue Property="ValueListProperty" String="ID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SearchSupported" Bool="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/portfolio_ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+        <Annotation Term="Common.Label" String="Portfolio"/>
+        <Annotation Term="Common.Text" Path="portfolio/name">
+          <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+        </Annotation>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="CollectionPath" String="Portfolios"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="portfolio_ID"/>
+                  <PropertyValue Property="ValueListProperty" String="ID"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+            <PropertyValue Property="SearchSupported" Bool="true"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.ValueListWithFixedValues" Bool="true"/>
+      </Annotations>
+      <Annotations Target="BucketService.Projects/currency_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.Label" String="Currency"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Currency"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

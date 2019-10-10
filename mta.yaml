@@ -1,0 +1,178 @@
+ID: pfm
+_schema-version: "2.1"
+version: 0.0.1
+modules:
+  - name: pfm-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+    requires:
+      - name: pfm-db-hdi-container
+  - name: pfm-srv
+    type: java
+    path: srv
+    parameters:
+      memory: 1024M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: pfm-uaa
+      - name: pfm-db-hdi-container
+        properties:
+          JBP_CONFIG_RESOURCE_CONFIGURATION: '[tomcat/webapps/ROOT/META-INF/context.xml:
+            {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]'
+  
+
+
+  - name: ProjectsWithAnnot
+    type: html5
+    path: generic-ui/ProjectsWithAnnot
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+     - name: srv_api
+       group: destinations
+       properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: srv_api
+          url: ~{url}
+     - name: pfm-uaa
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  - name: ui-test
+    type: html5
+    path: ui-test
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+     - name: srv_api
+       group: destinations
+       properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: srv_api
+          url: ~{url}
+     - name: pfm-uaa
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  - name: test
+    type: html5
+    path: test
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+     - name: srv_api
+       group: destinations
+       properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: srv_api
+          url: ~{url}
+     - name: pfm-uaa
+
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+
+  - name: project-list
+    type: html5
+    path: project-list
+    parameters:
+       disk-quota: 256M
+       memory: 256M
+    build-parameters:
+       builder: grunt
+    requires:
+     - name: srv_api
+       group: destinations
+       properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: srv_api
+          url: ~{url}
+     - name: pfm-uaa
+
+
+  - name: FLP
+    type: com.sap.portal.content
+    path: FLP
+    parameters:
+       stack: cflinuxfs3
+       memory: 128M
+       buildpack: https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.39/nodejs-buildpack-cflinuxfs3-v1.6.39.zip
+    requires:
+     - name: portal_resources_pfm
+     - name: uaa_pfm
+     - name: dt_pfm_appRouter
+     - name: pfmui_deployer
+
+resources:
+  - name: pfm-db-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+  - name: pfm-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: application
+      service: xsuaa
+      config:
+        xsappname: pfm-${space}
+        tenant-mode: dedicated
+  - name: portal_resources_pfm
+    parameters:
+       service-plan: standard
+       service: portal
+    type: org.cloudfoundry.managed-service
+
+                              

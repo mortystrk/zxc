@@ -1,0 +1,76 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:Reference Uri="/srv_api/odata/v2/BucketService/$metadata">
+		<edmx:Include Alias="Metadata" Namespace="BucketService"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="pfm.test.annotations.annotations.BucketService">
+			<Annotations Target="Metadata.Buckets">
+				<Annotation Term="UI.Facets">
+					<Collection>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BucketsInfo"/>
+							<PropertyValue Property="Label" String="General Info"/>
+						</Record>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Target" AnnotationPath="projects/@UI.LineItem"/>
+							<PropertyValue Property="Label" String="Projects"/>
+						</Record>
+					</Collection>
+				</Annotation>
+				<Annotation Term="UI.FieldGroup" Qualifier="BucketsInfo">
+					<Record Type="UI.FieldGroupType">
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="owner"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="referenceNumber"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="type"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="description">
+										<Annotation Term="UI.MultiLineText" Bool="true"/>
+									</PropertyValue>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="UI.HeaderInfo">
+					<Record Type="UI.HeaderInfoType">
+						<PropertyValue Property="TypeName" String="Bucket"/>
+						<PropertyValue Property="TypeNamePlural" String="Buckets"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="Metadata.Projects">
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="name"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="owner"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="parent/name"/>
+						</Record>
+						<Record Type="UI.DataFieldWithIntentBasedNavigation">
+							<PropertyValue Property="SemanticObject" Path="parent/name"/>
+							<PropertyValue Property="Value" Path="parent/name"/>
+							<PropertyValue Property="Label" String="Bucket"/>
+							<PropertyValue Property="Action" String="Display"/>
+						</Record>
+					</Collection>
+					<Annotation Term="UI.Criticality" Path="budget"/>
+				</Annotation>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
